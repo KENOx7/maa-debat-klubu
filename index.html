@@ -19,7 +19,6 @@
             theme: {
                 extend: {
                     colors: {
-                        // Əvvəlki fon düzəlişimiz (Slate 100)
                         light: { bg: '#f1f5f9', card: '#ffffff', text: '#0f172a', muted: '#475569' }, 
                         dark: { bg: '#020617', card: '#1e293b', text: '#f8fafc', muted: '#94a3b8' },
                         brand: { DEFAULT: '#2563eb', hover: '#1d4ed8', light: '#3b82f6' }
@@ -27,7 +26,6 @@
                 }
             }
         };
-        // Tema seçimi skripti
         if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.setAttribute('data-theme', 'dark');
         } else {
@@ -38,7 +36,7 @@
 
 <body class="bg-light-bg text-light-text dark:bg-dark-bg dark:text-dark-text min-h-screen flex flex-col">
 
-    <header class="sticky top-0 z-50 w-full backdrop-blur-md border-b border-slate-200 dark:border-white/10 bg-white/80 dark:bg-dark-bg/80">
+    <header class="sticky top-0 z-50 w-full backdrop-blur-md border-b border-slate-200 dark:border-white/10 bg-white/80 dark:bg-dark-bg/80 transition-colors duration-300">
         <div class="max-w-[1200px] mx-auto px-5 h-16 flex justify-between items-center">
             
             <a href="index.html" class="text-2xl font-bold text-black dark:text-white tracking-tight">
@@ -91,71 +89,115 @@
                 </svg>
             </a>
             
-            <nav class="hidden md:flex items-center gap-1">
-                <a href="index.html" class="px-4 py-2 rounded-md text-sm font-medium transition-colors hover:text-brand-DEFAULT dark:hover:text-brand-light text-light-muted dark:text-dark-muted">Ana Səhifə</a>
-                <a href="about.html" class="px-4 py-2 rounded-md text-sm font-medium transition-colors hover:text-brand-DEFAULT dark:hover:text-brand-light text-light-muted dark:text-dark-muted">Haqqımızda</a>
-                <a href="events.html" class="px-4 py-2 rounded-md text-sm font-medium transition-colors hover:text-brand-DEFAULT dark:hover:text-brand-light text-light-muted dark:text-dark-muted">Tədbirlər</a>
-                <a href="members.html" class="px-4 py-2 rounded-md text-sm font-medium transition-colors hover:text-brand-DEFAULT dark:hover:text-brand-light text-light-muted dark:text-dark-muted">Üzvlər</a>
-                <a href="contact.html" class="px-4 py-2 rounded-md text-sm font-medium transition-colors hover:text-brand-DEFAULT dark:hover:text-brand-light text-light-muted dark:text-dark-muted">Əlaqə</a>
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-brand-DEFAULT dark:hover:text-brand-light transition-colors">Ana Səhifə</a>
+                <a href="about.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-brand-DEFAULT dark:hover:text-brand-light transition-colors">Haqqımızda</a>
+                <a href="events.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-brand-DEFAULT dark:hover:text-brand-light transition-colors">Tədbirlər</a>
+                <a href="members.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-brand-DEFAULT dark:hover:text-brand-light transition-colors">Üzvlər</a>
+                <a href="contact.html" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-brand-DEFAULT dark:hover:text-brand-light transition-colors">Əlaqə</a>
             </nav>
-
+    
             <div class="flex items-center gap-4">
-                <button class="theme-toggle p-2 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 transition-colors" aria-label="Temanı dəyiş"></button>
-                </div>
+
+                <a href="https://forms.office.com/r/1LqpD5XaXN" target="_blank" class="hidden md:inline-flex items-center justify-center px-5 py-2 text-sm font-bold text-white transition-all duration-300 bg-brand-DEFAULT rounded-full hover:bg-blue-700 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none">
+                    <i class="fa-solid fa-user-plus mr-2"></i> Üzv Ol
+                </a>
+
+                <button class="theme-toggle p-2 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 transition-colors text-slate-600 dark:text-slate-300" aria-label="Temanı dəyiş">
+                    </button>
+    
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-600 dark:text-slate-300 hover:text-brand-DEFAULT transition-colors focus:outline-none">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    
+        <div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 w-full bg-white dark:bg-dark-bg border-b border-slate-200 dark:border-white/10 shadow-lg animate-fade-in">
+            <nav class="flex flex-col p-5 space-y-4 text-center">
+                <a href="index.html" class="block py-2 text-slate-900 dark:text-white font-medium hover:text-brand-DEFAULT">Ana Səhifə</a>
+                <a href="about.html" class="block py-2 text-slate-600 dark:text-slate-400 font-medium hover:text-brand-DEFAULT">Haqqımızda</a>
+                <a href="events.html" class="block py-2 text-slate-600 dark:text-slate-400 font-medium hover:text-brand-DEFAULT">Tədbirlər</a>
+                <a href="members.html" class="block py-2 text-slate-600 dark:text-slate-400 font-medium hover:text-brand-DEFAULT">Üzvlər</a>
+                <a href="contact.html" class="block py-2 text-slate-600 dark:text-slate-400 font-medium hover:text-brand-DEFAULT">Əlaqə</a>
+                <a href="https://forms.office.com/r/1LqpD5XaXN" target="_blank" class="block py-3 mt-2 text-white bg-brand-DEFAULT rounded-xl font-bold hover:bg-blue-700">
+                    Klubumuza Qoşul
+                </a>
+            </nav>
         </div>
     </header>
 
-    <main class="flex-grow">
-        <section class="relative py-20 md:py-32 px-5 text-center overflow-hidden">
-            <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-100 via-transparent to-transparent dark:from-blue-900/20 dark:via-transparent"></div>
-            
-            <div class="max-w-4xl mx-auto">
-                <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-slate-900 dark:text-white">
-                    Fikirlərin <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Gücünü</span> Kəşf Et
-                </h1>
-                <p class="text-lg md:text-xl text-slate-600 dark:text-slate-300 mb-10 leading-relaxed max-w-2xl mx-auto">
-                    Milli Aviasiya Akademiyası Debat Klubu ilə natiqlik bacarıqlarını artır, tənqidi təfəkkürü inkişaf etdir və lider ol.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="events.html" class="inline-flex items-center justify-center px-8 py-3 text-base font-semibold text-slate-700 dark:text-white bg-white dark:bg-white/10 border border-slate-200 dark:border-white/10 rounded-full hover:bg-slate-50 dark:hover:bg-white/20 transition-all">
-                        Tədbirlərə Bax
-                    </a>
-                    <a href="about.html" class="inline-flex items-center justify-center px-8 py-3 text-base font-semibold text-slate-700 dark:text-white bg-white dark:bg-white/10 border border-slate-200 dark:border-white/10 rounded-full hover:bg-slate-50 dark:hover:bg-white/20 transition-all">
-                        Haqqımızda
-                    </a>
-                </div>
-            </div>
-        </section>
+    <main>
+        <section class="pt-20 pb-32 px-5 relative overflow-hidden">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl -z-10 animate-pulse"></div>
+            <div class="absolute bottom-10 right-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl -z-10 animate-pulse delay-1000"></div>
 
-        <section class="py-16 px-5 bg-white dark:bg-dark-bg/50">
             <div class="max-w-[1200px] mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl font-bold mb-4 text-slate-900 dark:text-white">Niyə AADK?</h2>
-                    <p class="text-slate-600 dark:text-slate-400">Sizi digərlərindən fərqləndirəcək üstünlüklər</p>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="group p-8 rounded-2xl bg-slate-50 dark:bg-dark-card border border-slate-100 dark:border-white/5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg flex items-center justify-center mb-6 text-2xl">🎓</div>
-                        <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Həftəlik Təlimlər</h3>
-                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Peşəkar məşqçilərlə debat texnikaları və arqumentasiya üzrə interaktiv dərslər.
-                        </p>
+                <div class="flex flex-col items-center text-center mb-16 animate-fade-in">
+                    
+                    <div class="inline-block px-3 py-1 mb-4 text-xs font-medium tracking-wider text-blue-500 uppercase bg-blue-50 rounded-full border border-blue-100 dark:bg-blue-900/20 dark:text-blue-300 dark:border-blue-800">
+                        Rəsmi Debat Klubu
                     </div>
                     
-                    <div class="group p-8 rounded-2xl bg-slate-50 dark:bg-dark-card border border-slate-100 dark:border-white/5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg flex items-center justify-center mb-6 text-2xl">🏆</div>
-                        <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Turnir Təcrübəsi</h3>
+                    <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tight leading-tight">
+                        Sözün Gücü,<br>
+                        <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+                            Səmanın Zirvəsi
+                        </span>
+                    </h1>
+                    
+                    <p class="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                        Milli Aviasiya Akademiyasının rəsmi Debat Klubu. İntellektual gələcəyini bizimlə qur.
+                    </p>
+
+                    <div class="mt-10 flex flex-col md:flex-row gap-4 justify-center w-full sm:w-auto animate-fade-in" style="animation-delay: 0.1s;">
+    
+                        <a href="events.html" class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-slate-700 dark:text-white transition-all duration-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/10 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 hover:-translate-y-1 hover:shadow-lg hover:border-brand-DEFAULT/50 group">
+                            <i class="fa-regular fa-calendar-days mr-2 text-brand-DEFAULT"></i>
+                            Tədbirlərə Bax
+                        </a>
+                    
+                        <a href="https://forms.office.com/r/1LqpD5XaXN" target="_blank" class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-slate-700 dark:text-white transition-all duration-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/10 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 hover:-translate-y-1 hover:shadow-lg hover:border-brand-DEFAULT/50 group">
+                            <i class="fa-solid fa-user-plus mr-2 text-brand-DEFAULT"></i>
+                            Klubumuza Qoşul
+                        </a>
+                        
+                        <a href="about.html" class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-slate-700 dark:text-white transition-all duration-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/10 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 hover:-translate-y-1 hover:shadow-lg hover:border-brand-DEFAULT/50">
+                            <i class="fa-solid fa-circle-info mr-2 text-brand-DEFAULT"></i>
+                            Haqqımızda
+                        </a>
+                    
+                    </div>
+
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 animate-fade-in" style="animation-delay: 0.2s;">
+                    <div class="p-8 rounded-3xl bg-white dark:bg-dark-card border border-slate-200 dark:border-white/5 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 hover:-translate-y-2 group">
+                        <div class="w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-2xl mb-6 text-blue-600 group-hover:scale-110 transition-transform">
+                            🗣️
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Natiqlik Sənəti</h3>
                         <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Respublika və beynəlxalq səviyyəli turnirlərdə Akademiyanı təmsil etmək şansı.
+                            Fikirlərini səlis və inandırıcı şəkildə ifadə etməyi peşəkarlardan öyrən.
                         </p>
                     </div>
 
-                    <div class="group p-8 rounded-2xl bg-slate-50 dark:bg-dark-card border border-slate-100 dark:border-white/5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg flex items-center justify-center mb-6 text-2xl">🤝</div>
-                        <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Güclü Şəbəkə</h3>
+                    <div class="p-8 rounded-3xl bg-white dark:bg-dark-card border border-slate-200 dark:border-white/5 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 hover:-translate-y-2 group">
+                        <div class="w-14 h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 flex items-center justify-center text-2xl mb-6 text-indigo-600 group-hover:scale-110 transition-transform">
+                            🧠
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Tənqidi Düşüncə</h3>
                         <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Eyni maraqları paylaşan tələbələrlə tanışlıq və gələcək üçün peşəkar əlaqələr.
+                            Hadisələrə fərqli bucaqlardan baxmaq və analitik təhlil etmək bacarığı.
+                        </p>
+                    </div>
+
+                    <div class="p-8 rounded-3xl bg-white dark:bg-dark-card border border-slate-200 dark:border-white/5 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 hover:-translate-y-2 group">
+                        <div class="w-14 h-14 rounded-2xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-2xl mb-6 text-purple-600 group-hover:scale-110 transition-transform">
+                            🤝
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Netvörkinq</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Akademiyanın ən fəal tələbələri ilə tanış ol və yeni dostluqlar qazan.
                         </p>
                     </div>
                 </div>
@@ -163,12 +205,14 @@
         </section>
     </main>
 
-    <footer class="border-t border-slate-200 dark:border-white/10 bg-white dark:bg-dark-card pt-16 pb-8 px-5">
-        <div class="max-w-[1200px] mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-                <div>
-                    <a href="index.html" class="text-2xl font-bold text-brand-DEFAULT dark:text-white block mb-4">AADK</a>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+    <footer class="border-t border-slate-200 dark:border-white/10 bg-white dark:bg-dark-card mt-auto pt-16 pb-8">
+        <div class="max-w-[1200px] mx-auto px-5">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="md:col-span-2">
+                    <a href="index.html" class="text-2xl font-bold text-black dark:text-white tracking-tight mb-4 block">
+                        Aviasiya Debat
+                    </a>
+                    <p class="text-slate-600 dark:text-slate-400 max-w-sm leading-relaxed">
                         Milli Aviasiya Akademiyasının rəsmi Debat Klubu. İntellektual gələcəyini bizimlə qur.
                     </p>
                 </div>
@@ -189,7 +233,7 @@
                 </div>
             </div>
             <div class="border-t border-slate-200 dark:border-white/5 pt-8 text-center">
-                <p class="text-sm text-slate-500">&copy; 2025 Aviasiya Akademiyası Debat Klubu. Bütün hüquqlar qorunur.</p>
+                <p class="text-slate-600 dark:text-slate-400 text-sm">© 2025 Milli Aviasiya Akademiyası Debat Klubu</p>
             </div>
         </div>
     </footer>

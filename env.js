@@ -1,7 +1,2 @@
-// env.js
-// Bütün Supabase açarlarınızı burada mərkəzləşdirin.
-// BU FAYLI .gitignore İLƏ GİZLƏDİN!
-
-// Mötərizələr ( [ ] ) silindi. Dəyərlər dırnaq içində olmalıdır.
 const SUPABASE_URL = 'https://pmwoehbcastnwnomguqu.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBtd29laGJjYXN0bndub21ndXF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM0MTIzODQsImV4cCI6MjA3ODk4ODM4NH0.ZkaMRBun7scYmZ0VSvuarvFtHLxeJcZqWn6DimP2BUM';

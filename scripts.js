@@ -1,16 +1,10 @@
-// scripts.js
-
-// === AÇAR YOXLAMASI ===
 if (typeof SUPABASE_URL === 'undefined' || typeof SUPABASE_KEY === 'undefined' || SUPABASE_URL.includes('SİZİN_') || SUPABASE_URL.includes('[')) {
     console.error('XƏTA: Supabase açarları `env.js` faylında düzgün təyin edilməyib.');
 }
 
-// === SUPABASE CLIENT ===
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ===================================
-// 1. TEMA İDARƏETMƏSİ 🎨
-// ===================================
+// 1. TEMA İDARƏETMƏSİ 
 function initTheme() {
     const storedTheme = localStorage.getItem('theme');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -39,27 +33,30 @@ function updateThemeIcon(theme) {
     });
 }
 
-// ===================================
-// 2. NAVİQASİYA 📍
-// ===================================
+// 2. NAVİQASİYA 
 function highlightActiveLink() {
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    
     document.querySelectorAll('nav a').forEach(link => {
         const href = link.getAttribute('href');
         
-        if (href === currentPage && !link.classList.contains('font-bold')) {
-            link.classList.remove('text-light-muted', 'dark:text-dark-muted');
-            link.classList.add('text-brand-DEFAULT', 'dark:text-brand-light', 'font-medium');
+        const inactiveClasses = ['text-slate-600', 'dark:text-slate-300'];
+        const activeClasses = ['text-brand-DEFAULT', 'dark:text-brand-light', 'font-bold'];
+        if (href === currentPage) {
+            link.classList.remove(...inactiveClasses);
+            link.classList.add(...activeClasses);
         } else {
-            link.classList.add('text-light-muted', 'dark:text-dark-muted');
-            link.classList.remove('text-brand-DEFAULT', 'dark:text-brand-light');
+            link.classList.remove(...activeClasses);
+            link.classList.add(...inactiveClasses);
+            link.classList.add('font-medium'); 
+            link.classList.remove('font-bold');
         }
     });
 }
 
-// ===================================
-// 3. TƏDBİRLƏRİN YÜKLƏNMƏSİ 🗓️
-// ===================================
+document.addEventListener('DOMContentLoaded', highlightActiveLink);
+
+// 3. TƏDBİRLƏRİN YÜKLƏNMƏSİ 
 async function loadEvents() {
     const eventsContainer = document.getElementById('events-list-container');
     const eventSelect = document.getElementById('event-select');
@@ -70,7 +67,7 @@ async function loadEvents() {
         const { data: events, error } = await supabaseClient
             .from('events')
             .select('*')
-            .order('title', { ascending: true }); // DÜZƏLDİLDİ
+            .order('title', { ascending: true });
 
         if (error) throw error;
 
@@ -106,9 +103,7 @@ async function loadEvents() {
     }
 }
 
-// ===================================
-// 4. QEYDİYYAT FORMASI 📝
-// ===================================
+// 4. QEYDİYYAT FORMASI 
 async function initRegistrationForm() {
     const form = document.getElementById('registrationForm');
     const messageDiv = document.getElementById('formMessage');
@@ -159,9 +154,7 @@ async function initRegistrationForm() {
     });
 }
 
-// ===================================
-// BÜTÜN FUNKSİYALARI İŞƏ SALMA 🚀
-// ===================================
+// BÜTÜN FUNKSİYALARI İŞƏ SALMA 
 document.addEventListener('DOMContentLoaded', () => {
     loadEvents();
     initRegistrationForm();
@@ -172,3 +165,41 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', toggleTheme);
     });
 });
+
+// MOBİL MENYU (HAMBURGER) 
+function initMobileMenu() {
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const icon = btn.querySelector('i');
+
+    if (!btn || !menu) return;
+
+    btn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+
+        if (menu.classList.contains('hidden')) {
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-bars');
+        } else {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-xmark');
+        }
+    });
+
+    menu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            menu.classList.add('hidden');
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-bars');
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof loadEvents === 'function') loadEvents();
+    if (typeof initRegistrationForm === 'function') initRegistrationForm();
+    
+    initTheme(); 
+    initMobileMenu(); 
+});
+
